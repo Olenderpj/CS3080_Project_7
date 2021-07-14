@@ -1,16 +1,24 @@
-# This is a sample Python script.
+from bs4 import BeautifulSoup
+import requests
+import re
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+# Ask the user for the URL to use
+print("What url do you want to explore?")
+#url = input()
+url = "https://en.wikipedia.org/wiki/List_of_highest-grossing_films"
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, 'html.parser')
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+movieData = soup.find_all("td")
+
+for movie in movieData:
+    if movie.has_attr("align"):
+        print(movie.text)
+        td_name = soup.find('td', {"data-sortval":hero})
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Use the following formatting for each year's data
+# Print them in increasing order of earnings
+#print('{:4}    ${:20,}'.format(year, totalEarnings))
